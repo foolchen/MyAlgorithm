@@ -31,6 +31,23 @@ public class ArrayUtils {
     return arr;
   }
 
+  public static int[] generateNearlyOrderedArray(int n, int swapTimes) {
+    int[] arr = new int[n];
+    for (int i = 0; i < n; i++) {
+      arr[i] = i;
+    }
+    for (int i = 0; i < swapTimes; i++) {
+      int a = (int) (Math.random() * n);
+      int b = (int) (Math.random() * n);
+      swap(arr, a, b);
+    }
+    return arr;
+  }
+
+  public static void testSort(Class clazz, String methodName, int[] arr) {
+    testSort(clazz.getName(), methodName, arr);
+  }
+
   /**
    * 测试算法性能
    *
@@ -41,7 +58,8 @@ public class ArrayUtils {
   public static void testSort(String className, String methodName, int[] arr) {
     try {
       Class<?> clazz = Class.forName(className);
-      Method method = clazz.getMethod(methodName, int[].class);
+      Method method = clazz.getDeclaredMethod(methodName, int[].class);
+      method.setAccessible(true); // 访问私有方法
       // 构建参数列表，此处只有一个参数arr
       Object[] params = new Object[] {arr};
       long start = System.currentTimeMillis();

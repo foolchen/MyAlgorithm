@@ -53,4 +53,22 @@ public class SortGather {
       arr[j] = element;
     }
   }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // 冒泡排序的改进算法
+  // 该算法减少了元素的交换次数，仅在内存循环结束时进行一次交换
+  // 但是循环的执行次数与普通的冒泡排序相同，时间复杂度仍为O(n^2)
+  ///////////////////////////////////////////////////////////////////////////
+  public static void bubbleSort(int[] arr) {
+    int n = arr.length;
+    for (int i = n - 1; i > 0; i--) { // 外层执行n次
+      int maxIndex = 0;
+      for (int j = 0; j < i; j++) { // 内层循环执行n-1 -> n-i 次
+        if (arr[j] < arr[j + 1]) {
+          maxIndex = j + 1;
+        }
+      }
+      ArrayUtils.swap(arr, maxIndex, i);
+    }
+  }
 }
