@@ -1,4 +1,4 @@
-package com.foolchen.algorithm.sort;
+package com.foolchen.algorithm.sort.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
