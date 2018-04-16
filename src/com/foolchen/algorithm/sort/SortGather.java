@@ -63,7 +63,7 @@ public class SortGather {
     for (int i = l + 1; i <= r; i++) {
       int element = arr[i];
       int j;
-      for (j = i; arr[j - 1] > element; j--) {
+      for (j = i; j > l && arr[j - 1] > element; j--) {
         arr[j] = arr[j - 1];
       }
       arr[j] = element;
