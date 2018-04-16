@@ -48,6 +48,10 @@ public class ArrayUtils {
     testSort(clazz.getName(), methodName, arr);
   }
 
+  public static void testSort(Class clazz, String methodName, int[] arr, int[] result) {
+    testSort(clazz.getName(), methodName, arr, result);
+  }
+
   /**
    * 测试算法性能
    *
@@ -62,6 +66,35 @@ public class ArrayUtils {
       method.setAccessible(true); // 访问私有方法
       // 构建参数列表，此处只有一个参数arr
       Object[] params = new Object[] {arr};
+      long start = System.currentTimeMillis();
+      method.invoke(null, params);
+      long end = System.currentTimeMillis();
+      System.out.println(className + "." + methodName + ": " + (end - start) + "ms");
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 测试算法性能
+   *
+   * @param className 要测试的类
+   * @param methodName 要测试的方法名
+   * @param arr 要测试的数组
+   */
+  public static void testSort(String className, String methodName, int[] arr, int[] result) {
+    try {
+      Class<?> clazz = Class.forName(className);
+      Method method = clazz.getDeclaredMethod(methodName, int[].class, int[].class);
+      method.setAccessible(true); // 访问私有方法
+      // 构建参数列表，此处只有一个参数arr
+      Object[] params = new Object[] {arr, result};
       long start = System.currentTimeMillis();
       method.invoke(null, params);
       long end = System.currentTimeMillis();
