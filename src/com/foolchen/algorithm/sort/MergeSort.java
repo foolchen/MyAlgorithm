@@ -134,8 +134,9 @@ public class MergeSort {
     int mid = (l + r) / 2;
     sort2(arr, result, l, mid);
     sort2(arr, result, mid + 1, r);
-
-    merge2(arr, result, l, mid, r);
+    if (arr[mid] > arr[mid + 1]) {
+      merge2(arr, result, l, mid, r);
+    }
   }
 
   // 归并数组
