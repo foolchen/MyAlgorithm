@@ -20,6 +20,14 @@ public class ArrayUtils {
     arr[j] = t;
   }
 
+  /**
+   * 生成长度为n的随机数组
+   *
+   * @param n 数组的长度
+   * @param rangeL 数组内元素的最小值
+   * @param rangeR 数组内元素的最大值
+   * @return 生成的数组
+   */
   public static int[] generateRandomArray(int n, int rangeL, int rangeR) {
     assert rangeL <= rangeR;
 
@@ -31,6 +39,14 @@ public class ArrayUtils {
     return arr;
   }
 
+  /**
+   * 生成长度为n的近乎有序的数组<br/>
+   * 该方法的本质为生成一个有序数组，然后交换swapTimes次
+   *
+   * @param n 数组的长度
+   * @param swapTimes 生成有序数组后，随机交换的次数
+   * @return 生成的数组
+   */
   public static int[] generateNearlyOrderedArray(int n, int swapTimes) {
     int[] arr = new int[n];
     for (int i = 0; i < n; i++) {
@@ -40,6 +56,20 @@ public class ArrayUtils {
       int a = (int) (Math.random() * n);
       int b = (int) (Math.random() * n);
       swap(arr, a, b);
+    }
+    return arr;
+  }
+
+  /**
+   * 生成一个长度为n的完全倒序的数组
+   *
+   * @param n 数组的长度
+   * @return 生成的数组
+   */
+  public static int[] generateReversedArray(int n) {
+    int[] arr = new int[n];
+    for (int i = 0; i < n; i++) {
+      arr[i] = n - i;
     }
     return arr;
   }
