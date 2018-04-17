@@ -12,8 +12,10 @@ import java.util.Arrays;
 public class QuickSort {
 
   public static void main(String[] args) {
-    int[] arr = ArrayUtils.generateReversedArray(20);
-    quickSort(arr);
+    int[] arr = ArrayUtils.generateReversedArray(20000);
+    //quickSort(arr);
+    //System.out.println("quick sort : " + Arrays.toString(arr));
+    ArrayUtils.testSort(QuickSort.class, "quickSort", arr);
     System.out.println("quick sort : " + Arrays.toString(arr));
   }
 
@@ -33,9 +35,15 @@ public class QuickSort {
   ///////////////////////////////////////////////////////////////////////////
   private static void quickSort(int[] arr, int l, int r) {
 
-    if (l >= r) { // 已遍历完成，跳出
+    /*if (l >= r) { // 已遍历完成，跳出
+      return;
+    }*/
+    if (r - l <= 15) {
+      // 对于小规模数组，使用插入排序进行优化
+      SortGather.insertionSort(arr, l, r);
       return;
     }
+
     // 对arr[l,r]进行分治，然后返回标定点anchor（anchor索引对应的位置，位于两个数组的中间）
     int anchor = partition(arr, l, r);
 
