@@ -12,15 +12,26 @@ import java.util.Arrays;
 public class QuickSort {
 
   public static void main(String[] args) {
-    int[] arr = ArrayUtils.generateReversedArray(100000);
-    //quickSort(arr);
-    //System.out.println("quick sort : " + Arrays.toString(arr));
-    ArrayUtils.testSort(QuickSort.class, "quickSort", arr);
-    //System.out.println("quick sort : " + Arrays.toString(arr));
+    int[] hugeArr = ArrayUtils.generateReversedArray(100000);
+    //quickSort(hugeArr);
+    //System.out.println("quick sort : " + Arrays.toString(hugeArr));
+    ArrayUtils.testSort(QuickSort.class, "quickSort", hugeArr);
+    //System.out.println("quick sort : " + Arrays.toString(hugeArr));
     // 生成一个近乎有序的数组。此处生成200000个0~10的元素组成数组，元素重复数非常多。
-    arr = ArrayUtils.generateRandomArray(100000, 0, 10);
-    ArrayUtils.testSort(QuickSort.class, "quickSort", arr);
-    // 消耗时间分别为18ms和249ms。发现在重复元素多时，快速排序的速度大大下降。
+    int[] sourceHugeArr = ArrayUtils.generateRandomArray(100000, 0, 10);
+    ArrayUtils.testSort(QuickSort.class, "quickSort",
+        Arrays.copyOf(sourceHugeArr, sourceHugeArr.length));
+    // 针对sourceHugeArr，消耗249ms。发现在重复元素多时，快速排序的速度大大下降。
+
+    // 先测试双路快速排序的正确性
+    int[] arr = ArrayUtils.generateRandomArray(20, 0, 99);
+    quickSortTwoWays(arr);
+    System.out.println("quick sort two ways : " + Arrays.toString(arr));
+
+    // 然后测试双路快速排序的时间消耗
+    ArrayUtils.testSort(QuickSort.class, "quickSortTwoWays",
+        Arrays.copyOf(sourceHugeArr, sourceHugeArr.length));
+    // 双路快速排序，针对sourceHugeArr进行排序，消耗13ms
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -93,6 +104,74 @@ public class QuickSort {
     // 则此时将l位置与j位置的元素交换，则数组为arr[l,j-1]<=arr[j]<=arr[j+1,r]的组成
     ArrayUtils.swap(arr, l, j);
     // 此时的j即为标定点
+    return j;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // 双路快速排序
+  ///////////////////////////////////////////////////////////////////////////
+  private static void quickSortTwoWays(int[] arr) {
+    int n = arr.length;
+    quickSortTwoWays(arr, 0, n - 1);
+  }
+
+  // 对数组arr[l,r]进行双路快速排序
+  private static void quickSortTwoWays(int[] arr, int l, int r) {
+
+    if (r - l <= 15) {
+      SortGather.insertionSort(arr, l, r);
+      return;
+    }
+
+    int anchor = partitionTwoWays(arr, l, r);
+    quickSortTwoWays(arr, l, anchor - 1);
+    quickSortTwoWays(arr, anchor + 1, r);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // 该方法对数组arr[l,r]进行分割
+  // 随机取标定点value，并使数组从前往后、从后往前同时进行遍历。
+  // 针对从前往后的遍历：
+  // 起始点i=l+1（索引l对应的元素为标定点value），不断向后遍历直至遇到一个元素arr[i]>=value，此时跳出遍历，得到索引i
+  // 针对从后往前的遍历：
+  // 起始点j=r（最后一个元素），不断向前遍历直至遇到一个元素arr[j]<=value，此时跳出遍历，得到索引j。
+  // 两个遍历都跳出后，则交换i、j处的元素，使i++、j--，并继续遍历。
+  // 直至i>j，跳出所有的循环。
+  //
+  // 针对双路遍历，得到arr[i]>=value、arr[j]<=value,并交换i、j处元素的过程中，不断将
+  // 小于等于value的元素分割到arr[l+1,i)数组中，将大于等于value的元素分割到arr(j,r]数组中
+  // 该过程，即使arr[i]==arr[j]也会进行交换，这样就将与value重复的元素不断的分配到了左右两个
+  // 数组中，避免了两个数组分割不平衡，从而有效避免了快速排序时间复杂度退化为O(n^2)的情况
+  //
+  // 在最后的循环跳出后，i>j。此时i是整个数组中大于（大于等于）value的第一个索引
+  // j是整个数组中小于（小于等于）value的最后一个索引
+  // 故将l处的value与j处的元素进行交换，即得到了需要的两个数组，并且j即为两个数组的标定点
+  ///////////////////////////////////////////////////////////////////////////
+  private static int partitionTwoWays(int[] arr, int l, int r) {
+
+    // 随机获取标定点
+    ArrayUtils.swap(arr, l, (int) (Math.random() * (r - l + 1)) + l);
+    int value = arr[l];
+
+    int i = l + 1;
+    int j = r;
+    while (true) {
+      // 在arr[i]<value的情况下，不断对arr[l+1,i)进行扩容即满足数组的需求
+      while (i <= r && arr[i] < value) i++;
+      // 在arr[j]>value的情况下，不断对arr(j,r]进行扩容即满足数组的需求
+      while (j >= l + 1 && arr[j] > value) j--;
+      // 在i>j时，整个数组遍历完成，此时跳出循环
+      if (i > j) break;
+
+      // 执行到此处时，得到了arr[i]>=value和arr[j]<=value
+      // 此时将i、j处的元素交换，以使数组满足arr[l+1,i)<=value和arr(j,r]>=value
+      ArrayUtils.swap(arr, i, j);
+      // 在交换元素后，使各自索引继续改变，以便于进行下次的循环
+      i++;
+      j--;
+    }
+
+    ArrayUtils.swap(arr, l, j);
     return j;
   }
 }
