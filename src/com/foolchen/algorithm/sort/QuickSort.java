@@ -12,16 +12,26 @@ import java.util.Arrays;
 public class QuickSort {
 
   public static void main(String[] args) {
-    int[] arr = ArrayUtils.generateReversedArray(20000);
+    int[] arr = ArrayUtils.generateReversedArray(100000);
     //quickSort(arr);
     //System.out.println("quick sort : " + Arrays.toString(arr));
     ArrayUtils.testSort(QuickSort.class, "quickSort", arr);
-    System.out.println("quick sort : " + Arrays.toString(arr));
+    //System.out.println("quick sort : " + Arrays.toString(arr));
+    // 生成一个近乎有序的数组。此处生成200000个0~10的元素组成数组，元素重复数非常多。
+    arr = ArrayUtils.generateRandomArray(100000, 0, 10);
+    ArrayUtils.testSort(QuickSort.class, "quickSort", arr);
+    // 消耗时间分别为18ms和249ms。发现在重复元素多时，快速排序的速度大大下降。
   }
 
   ///////////////////////////////////////////////////////////////////////////
   // 快速排序
   // 分治算法，本质还是将大的数组不断分割为小的数组进行递归调用
+  // 该排序方式，选定标定值，并根据遍历元素的大小将整个数组不断分割为左右两个数组并且不断进行递归调用
+  // 该方式存在两个缺点：
+  // 1. 在数组近乎有序时，由于数组的左右分割严重不平衡，使时间复杂度退化至O(n^2)
+  // 2. 在数组中重复元素过多时，数组的分割方式，导致重复元素不断被分配到其中的一个数组中，导致数组分割不平衡。
+  // 第1个问题，可以通过随机选定标定值的方式来保证快速排序的平均时间复杂度为O(nLog n)。
+  // 第2个问题，则需要通过双路快速排序来进行处理。
   ///////////////////////////////////////////////////////////////////////////
   private static void quickSort(int[] arr) {
     int n = arr.length;
