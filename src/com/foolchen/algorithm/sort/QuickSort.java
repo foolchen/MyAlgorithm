@@ -58,7 +58,14 @@ public class QuickSort {
   ///////////////////////////////////////////////////////////////////////////
   private static int partition(int[] arr, int l, int r) {
     // 取数组的第一个元素作为标定值
+    // int value = arr[l];
+
+    // 在数组近乎有序时，在进行partition操作时，左侧数组可能为0，此时时间复杂度可能会变为O(n^2)
+    // 为了避免这种情况，随机取标定值，并将其交换到数组l处
+    // 这样可以最大程度上避免时间复杂度变为O(n^2)的情况，并且也不需要对partition的其他部分做修改
+    ArrayUtils.swap(arr, l, (int) (Math.random() * (r - l + 1)) + l);
     int value = arr[l];
+
     // 对数组[l+1,r]进行遍历，并在其中交换元素，使满足arr[l+1,j]<value,arr[j+1,i)>value
     // 由于i索引对应的元素是正在进行比较的元素，故右侧为开区间
     int j = l;
