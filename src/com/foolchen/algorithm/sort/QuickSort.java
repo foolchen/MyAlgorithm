@@ -208,9 +208,11 @@ public class QuickSort {
   // 对数组arr[l,r]进行快速排序
   // 供快速排序递归调用
   private static void quickSortThreeWays(int[] arr, int l, int r) {
-    /*if (r - l <= 15) {
+    /*if (l >= r) {
+      return;
     }*/
-    if (l >= r) {
+    if (r - l <= 15) {
+      SortGather.insertionSort(arr, l, r);
       return;
     }
 
@@ -246,8 +248,8 @@ public class QuickSort {
       }
     }
     ArrayUtils.swap(arr, l, lt);
-    lt--;
-    quickSortThreeWays(arr, l, lt);
+    // 此时lt处的元素即为标定点元素
+    quickSortThreeWays(arr, l, lt - 1);
     quickSortThreeWays(arr, gt, r);
   }
 }
