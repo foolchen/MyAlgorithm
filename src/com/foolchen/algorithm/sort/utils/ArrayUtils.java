@@ -74,6 +74,24 @@ public class ArrayUtils {
     return arr;
   }
 
+  public static int[] generateRepetitiveArray(int n, int differentCount) {
+    int[] arr = new int[n];
+    // 首先生成完全重复的数据
+    int value = (int) (Math.random() * n);
+    for (int i = 0; i < n; i++) {
+      arr[i] = value;
+    }
+
+    for (int i = 0; i < differentCount; i++) {
+      // 然后生成随机的数字
+      int diff = (int) (Math.random() * n);
+      int position = (int) (Math.random() * n);
+      arr[position] = diff;
+    }
+
+    return arr;
+  }
+
   public static void testSort(Class clazz, String methodName, int[] arr) {
     testSort(clazz.getName(), methodName, arr);
   }

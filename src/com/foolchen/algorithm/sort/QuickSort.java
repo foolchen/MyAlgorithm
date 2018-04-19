@@ -32,6 +32,17 @@ public class QuickSort {
     ArrayUtils.testSort(QuickSort.class, "quickSortTwoWays",
         Arrays.copyOf(sourceHugeArr, sourceHugeArr.length));
     // 双路快速排序，针对sourceHugeArr进行排序，消耗13ms
+
+    // 首先测试三路快速排序的正确性
+    arr = ArrayUtils.generateRandomArray(50, 0, 10);
+    System.out.println("quick sort three ways source arr : " + Arrays.toString(arr));
+    quickSortThreeWays(arr);
+    System.out.println("quick sort three ways result arr : " + Arrays.toString(arr));
+
+    // 测试三路快速排序的性能
+    ArrayUtils.testSort(QuickSort.class, "quickSortThreeWays",
+        Arrays.copyOf(sourceHugeArr, sourceHugeArr.length));
+    // 普通快速排序 267ms,双路 13ms，三路 9ms
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -173,5 +184,70 @@ public class QuickSort {
 
     ArrayUtils.swap(arr, l, j);
     return j;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // 三路快速排序
+  // 遍历过程中，将整个数组划分为三部分
+  // arr[l+1,lt]<value，arr[lt+1,i)==value，arr[gt,r]>value
+  // i为正在比较的元素的索引。
+  // 如果arr[i]<value，则将arr[i]与arr[lt+1]交换位置，并将lt+1
+  // 这样可将arr[l+1,lt]扩容，并保证其元素全部小于value
+  // 如果arr[i]==value，则仅经i+1，使arr[lt+1,i)扩容
+  // 如果arr[i]>value，则将arr[i]有arr[gt-1]交换。相当于将arr[gt,r]扩容，并使其所有元素
+  // 大于value。交换后arr[i]处的元素大小不确定，需要再次进行比较，故i的值保持不变
+  // 在i>=gt时，遍历完成。此时arr[i]为数组中第一个大于value的元素。此时将arr[l]=value与arr[lt]
+  // 交换即可得到需要的数组，此时使arr[lt+1,i)进行了扩容。
+  // 并且得到了标定点索引lt
+  ///////////////////////////////////////////////////////////////////////////
+  private static void quickSortThreeWays(int[] arr) {
+    int n = arr.length;
+    quickSortThreeWays(arr, 0, n - 1);
+  }
+
+  // 对数组arr[l,r]进行快速排序
+  // 供快速排序递归调用
+  private static void quickSortThreeWays(int[] arr, int l, int r) {
+    /*if (r - l <= 15) {
+    }*/
+    if (l >= r) {
+      return;
+    }
+
+    partitionThreeWays(arr, l, r);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // 对数组arr[l,r]进行分割
+  // arr[l+1,lt]<value，arr[lt+1,i)==value，arr[gt,r]>value
+  // 由于在分割中生成了三个子数组，故此处不返回标定点对应的索引，而是在该方法中继续使用
+  // arr[l+1,lt]、arr[gt,r]进行递归调用来完成快速排序
+  ///////////////////////////////////////////////////////////////////////////
+  private static void partitionThreeWays(int[] arr, int l, int r) {
+    if (l >= r) {
+      return;
+    }
+    ArrayUtils.swap(arr, l, (int) (Math.random() * (r - l + 1)) + l);
+    int value = arr[l];
+
+    int lt = l;
+    int gt = r + 1;
+    int i = l + 1;
+    while (i < gt) {
+      if (arr[i] < value) {
+        ArrayUtils.swap(arr, lt + 1, i);
+        lt++;
+        i++;
+      } else if (arr[i] > value) {
+        ArrayUtils.swap(arr, gt - 1, i);
+        gt--;
+      } else {
+        i++;
+      }
+    }
+    ArrayUtils.swap(arr, l, lt);
+    lt--;
+    quickSortThreeWays(arr, l, lt);
+    quickSortThreeWays(arr, gt, r);
   }
 }
