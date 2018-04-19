@@ -13,7 +13,7 @@ import java.util.Arrays;
  *
  * @author chenchong. Created on 2018/4/19.
  */
-public class IntMaxHeap {
+public class MaxIntHeap {
   ///////////////////////////////////////////////////////////////////////////
   // 一个最大对，需要具备构造函数、插入方法、取出方法、获取元素数量
   // 插入方法对应的需要有shift up方法，取出方法需要有对应的shift down方法
@@ -22,13 +22,13 @@ public class IntMaxHeap {
   private int count;
   private int capacity;
 
-  public IntMaxHeap(int capacity) {
+  public MaxIntHeap(int capacity) {
     data = new int[capacity + 1];// 该最大对根节点的索引从1开始，索引0的位置限制，故需要capacity+1的容量
     count = 0;
     this.capacity = capacity;
   }
 
-  public IntMaxHeap(int[] arr) {
+  public MaxIntHeap(int[] arr) {
     int length = arr.length;
     data = new int[length + 1];
     capacity = length;
@@ -139,7 +139,7 @@ public class IntMaxHeap {
     int[] arr = {62, 41, 30, 28, 16, 22, 13, 19, 17, 15};
     ArrayUtils.disorderArr(arr, 5);
     System.out.println("disordered arr : " + Arrays.toString(arr));
-    IntMaxHeap heap = new IntMaxHeap(arr);
+    MaxIntHeap heap = new MaxIntHeap(arr);
     System.out.println("max heap constructed by arr : " + heap.toString());
     int count = heap.getCount();
     int[] result = new int[count];
@@ -148,7 +148,7 @@ public class IntMaxHeap {
     }
     System.out.println("result : " + Arrays.toString(result));
 
-    heap = new IntMaxHeap(10);
+    heap = new MaxIntHeap(10);
     for (int e : arr) {
       heap.insert(e);
     }
