@@ -81,7 +81,7 @@ public class MaxIntHeap {
   }
 
   @Override public String toString() {
-    StringBuilder builder = new StringBuilder("[");
+    StringBuilder builder = new StringBuilder("MaxIntHeap [");
     for (int i = 0; i < data.length; i++) {
       if (i != 0) {
         builder.append(data[i]);
@@ -129,7 +129,7 @@ public class MaxIntHeap {
         ArrayUtils.swap(data, position, position / 2);
         position = position / 2;
       } else {
-        // 如果当期元素的值<=父节点元素的值，则直接跳出循环。当前的树即为完全二叉树，堆即为最大二叉堆
+        // 如果当前元素的值<=父节点元素的值，则直接跳出循环。当前的树即为完全二叉树，堆即为最大二叉堆
         break;
       }
     }
