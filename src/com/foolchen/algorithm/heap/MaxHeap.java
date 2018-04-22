@@ -100,12 +100,12 @@ public class MaxHeap<Item extends Comparable<Item>> {
   }
 
   // 向下位移
-  // 从position开始，一直到第一个叶子节点（第一个没有子节点的节点）之前进行循环
+  // 从position开始，一直到第一个非叶子节点进行循环
   // 将position处的元素与其子节点的元素进行比较，如果小于子节点的元素，则将其与子节点中较大的一个进行交换
   // 并从新的位置开始进行新的循环
   private void shiftDown(int position) {
     while (2 * position + 1 <= count - 1) {
-      // parentIndex = (i-1)/2，此处需要保证position是第一个叶子节点之前的节点。position之后的全部是叶子节点，没有进行遍历的意义
+      // parentIndex = (i-1)/2，此处需要保证position第一个非叶子节点之前的节点。position之后的全部是叶子节点，没有进行遍历的意义
       // 首先取左叶子的索引
       int leafPosition = 2 * position + 1;
       // 如果存在右叶子
@@ -171,6 +171,7 @@ public class MaxHeap<Item extends Comparable<Item>> {
     for (int i = 0; i < result.length; i++) {
       result[i] = maxHeap2.extract();
     }
-    System.out.println("result of MaxHeap constructed by constructor :  " + Arrays.toString(result));
+    System.out.println(
+        "result of MaxHeap constructed by constructor :  " + Arrays.toString(result));
   }
 }
