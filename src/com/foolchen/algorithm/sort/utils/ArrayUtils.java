@@ -102,6 +102,15 @@ public class ArrayUtils {
     }
   }
 
+  public static <T extends Comparable<T>> void disorderArr(T[] arr, int swapTimes) {
+    int length = arr.length;
+    for (int i = 0; i < swapTimes; i++) {
+      int a = (int) (Math.random() * length);
+      int b = (int) (Math.random() * length);
+      swap(arr, a, b);
+    }
+  }
+
   public static void testSort(Class clazz, String methodName, int[] arr) {
     testSort(clazz.getName(), methodName, arr);
   }
