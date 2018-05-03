@@ -1,8 +1,5 @@
 package com.foolchen.algorithm.tree;
 
-import com.foolchen.algorithm.utils.FileOperations;
-import java.util.Vector;
-
 /**
  * 二叉搜索树（Binary Search Tree）<br/>
  * {@link #root}为当前节点的根节点，如果当前节点已经是根节点，则{@link #root}为空。<br/>
@@ -79,6 +76,27 @@ public class BST<Key extends Comparable<Key>, Value> {
    */
   public Value search(Key key) {
     return search(root, key);
+  }
+
+  /**
+   * 对二叉搜索树进行前序遍历
+   */
+  public void preOrder() {
+    preOrder(root);
+  }
+
+  /**
+   * 对二叉搜索树进行中序遍历
+   */
+  public void inOrder() {
+    inOrder(root);
+  }
+
+  /**
+   * 对二叉搜索树进行后续遍历
+   */
+  public void postOrder() {
+    postOrder(root);
   }
 
   /**
@@ -161,5 +179,34 @@ public class BST<Key extends Comparable<Key>, Value> {
     return value;
   }
 
+  private void preOrder(Node node) {
+    if (node != null) {
+      // 在节点不为空的情况下，先访问当前节点
+      System.out.println(node.key);
+      // 然后依次对左右子树进行前序遍历的递归调用
+      preOrder(node.left);
+      preOrder(node.right);
+    }
+  }
 
+  private void inOrder(Node node) {
+    if (node != null) {
+      // 在节点不为空的情况下，先对左子树进行中序遍历的递归调用
+      inOrder(node.left);
+      // 然后对当前节点进行访问
+      System.out.println(node.key);
+      // 最后对右子树进行中序遍历的递归调用
+      inOrder(node.right);
+    }
+  }
+
+  private void postOrder(Node node) {
+    if (node != null) {
+      // 在节点不为空的情况下，先对左右子树分别进行后序遍历的递归调用
+      postOrder(node.left);
+      postOrder(node.right);
+      // 然后对当前节点进行访问
+      System.out.println(node.key);
+    }
+  }
 }
