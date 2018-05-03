@@ -139,5 +139,9 @@ public class BSTTest {
     System.out.println("postOrder: ");
     bst.postOrder();
     System.out.println();
+
+    System.out.println("levelOrder: ");
+    bst.levelOrder();
+    System.out.println();
   }
 }

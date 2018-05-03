@@ -1,5 +1,7 @@
 package com.foolchen.algorithm.tree;
 
+import java.util.LinkedList;
+
 /**
  * 二叉搜索树（Binary Search Tree）<br/>
  * {@link #root}为当前节点的根节点，如果当前节点已经是根节点，则{@link #root}为空。<br/>
@@ -97,6 +99,27 @@ public class BST<Key extends Comparable<Key>, Value> {
    */
   public void postOrder() {
     postOrder(root);
+  }
+
+  /**
+   * 对二叉搜索树进行层序遍历
+   */
+  public void levelOrder() {
+    if (root != null) {
+      LinkedList<Node> q = new LinkedList<Node>();
+      q.add(root);
+
+      while (!q.isEmpty()) {
+        Node node = q.remove();
+        System.out.println(node.key);
+        if (node.left != null) {
+          q.add(node.left);
+        }
+        if (node.right != null) {
+          q.add(node.right);
+        }
+      }
+    }
   }
 
   /**
