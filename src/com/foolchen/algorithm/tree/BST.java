@@ -3,7 +3,7 @@ package com.foolchen.algorithm.tree;
 import java.util.LinkedList;
 
 /**
- * 二叉搜索树（Binary Search Tree）<br/>
+ * 二分搜索树（Binary Search Tree）<br/>
  * {@link #root}为当前节点的根节点，如果当前节点已经是根节点，则{@link #root}为空。<br/>
  * {@link #count}用于记录以当前节点为根的字数中的节点总数。
  *
@@ -11,8 +11,8 @@ import java.util.LinkedList;
  */
 public class BST<Key extends Comparable<Key>, Value> {
   /*
-   二叉搜索树由一个个节点(Node)组成
-   二叉搜索树不一定为完全二叉树
+   二分搜索树由一个个节点(Node)组成
+   二分搜索树不一定为完全二叉树
   */
 
   /**
@@ -63,7 +63,7 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 判断二叉搜索树中是否存在键为key的元素
+   * 判断二分搜索树中是否存在键为key的元素
    *
    * @return 如果存在的返回true，否则false
    */
@@ -72,7 +72,7 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 从二叉搜索树中根据key查找对应的值
+   * 从二分搜索树中根据key查找对应的值
    *
    * @return 查找成功则返回值，否则返回null
    */
@@ -81,28 +81,28 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 对二叉搜索树进行前序遍历
+   * 对二分搜索树进行前序遍历
    */
   public void preOrder() {
     preOrder(root);
   }
 
   /**
-   * 对二叉搜索树进行中序遍历
+   * 对二分搜索树进行中序遍历
    */
   public void inOrder() {
     inOrder(root);
   }
 
   /**
-   * 对二叉搜索树进行后续遍历
+   * 对二分搜索树进行后续遍历
    */
   public void postOrder() {
     postOrder(root);
   }
 
   /**
-   * 对二叉搜索树进行层序遍历
+   * 对二分搜索树进行层序遍历
    */
   public void levelOrder() {
     if (root != null) {
@@ -123,7 +123,7 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 从二叉搜索树中查找最小键所在节点
+   * 从二分搜索树中查找最小键所在节点
    */
   public Key minimum() {
     if (count != 0) {
@@ -134,7 +134,7 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 从二叉搜索树中删除最小键所在的节点
+   * 从二分搜索树中删除最小键所在的节点
    */
   public void removeMin() {
     if (root != null) {
@@ -143,7 +143,7 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 从二叉搜索树中查找最大键所在节点
+   * 从二分搜索树中查找最大键所在节点
    */
   public Key maximum() {
     if (count != 0) {
@@ -160,13 +160,13 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 向以node节点为根的二叉搜索树中插入新的元素<br/>
+   * 向以node节点为根的二分搜索树中插入新的元素<br/>
    * 该方法使用了递归算法。
    */
   private Node insert(Node node, Key key, Value value) {
     if (node == null) {
-      // 如果node为空，则证明以node为根的二叉搜索树为空
-      // 此时直接将新插入的元素当做该二叉搜索树的根，并返回
+      // 如果node为空，则证明以node为根的二分搜索树为空
+      // 此时直接将新插入的元素当做该二分搜索树的根，并返回
       // 由于是递归调用，故调用最终会进入该分支中，仅在此处进行count++操作即可
       count++;
       return new Node(key, value);
@@ -186,14 +186,14 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 在以node节点为根的二叉搜索树中查找是否存在键为key的元素</br>
+   * 在以node节点为根的二分搜索树中查找是否存在键为key的元素</br>
    * 该方法使用了递归算法。
    *
    * @return 如果存在的返回true，否则false
    */
   private boolean contains(Node node, Key key) {
     if (node == null) {
-      // 此时，该二叉搜索树为空，不包含任何元素
+      // 此时，该二分搜索树为空，不包含任何元素
       return false;
     }
 
@@ -215,19 +215,19 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
-   * 在以node节点为根的二叉搜索树中查找key对应的元素值
+   * 在以node节点为根的二分搜索树中查找key对应的元素值
    *
    * @return 查找成功则返回其值，否则返回null
    */
   private Value search(Node node, Key key) {
     Value value;
     if (node == null) {
-      // 根为空，则证明当前二叉搜索树为空，不包含任何元素
+      // 根为空，则证明当前二分搜索树为空，不包含任何元素
       return null;
     }
     int result = key.compareTo(node.key);
     if (result == 0) {
-      // 当前二叉搜索树的根节点即为要查找的节点
+      // 当前二分搜索树的根节点即为要查找的节点
       value = node.value;
     } else if (key.compareTo(node.key) < 0) {
       // 此时，要查找的值可能在左子树中
@@ -270,22 +270,22 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
   }
 
-  // 查找以node为根的子二叉搜索树的最小节点
+  // 查找以node为根的子二分搜索树的最小节点
   private Node minimum(Node node) {
-    // 由于二叉搜索树的左孩子一定比当前节点小，故在某个节点没有左孩子时，该节点一定是树中的最小节点
+    // 由于二分搜索树的左孩子一定比当前节点小，故在某个节点没有左孩子时，该节点一定是树中的最小节点
     if (node.left == null) {
       return node;
     }
     return minimum(node.left);
   }
 
-  // 在以node为根的二叉搜索树中删除最小节点，并且返回根节点
+  // 在以node为根的二分搜索树中删除最小节点，并且返回根节点
   private Node removeMin(Node node) {
     if (node.left == null) {
       // 该节点没有左孩子，则此时该节点即为最小节点
-      // 由于二叉搜索树中的左子树中的值一定比根节点要小
+      // 由于二分搜索树中的左子树中的值一定比根节点要小
       // 故在将node从树中断开连接后，如果该node还有右孩子
-      // 则直接将这个右孩子替换node当做其根节点的左孩子并不会破坏二叉搜索树的结构
+      // 则直接将这个右孩子替换node当做其根节点的左孩子并不会破坏二分搜索树的结构
       Node rightNode = node.right;
       node.right = null; // 取消node对于right的引用，防止内存泄露
       count--;
@@ -298,21 +298,21 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
   }
 
-  // 查找以node为根的子二叉搜索树的最大节点
+  // 查找以node为根的子二分搜索树的最大节点
   private Node maximum(Node node) {
-    // 由于二叉搜索树的右孩子一定比当前节点大，故在某个节点没有右孩子时，该节点一定是树中的最大节点
+    // 由于二分搜索树的右孩子一定比当前节点大，故在某个节点没有右孩子时，该节点一定是树中的最大节点
     if (node.right == null) {
       return node;
     }
     return maximum(node.right);
   }
 
-  // 在以node为根的二叉搜索树中删除最大节点，并且返回根节点
+  // 在以node为根的二分搜索树中删除最大节点，并且返回根节点
   private Node removeMax(Node node) {
     if (node.right == null) {
-      // 在node没有右孩子的时候，则node就是二叉搜索树中的最大值
-      // 此时需要将node从二叉搜索树中断开
-      // 此时如果node还有左孩子，根据二叉搜索树的结构特点（右子树中的所有节点都比根节点大），node.left一定比node的父节点要大
+      // 在node没有右孩子的时候，则node就是二分搜索树中的最大值
+      // 此时需要将node从二分搜索树中断开
+      // 此时如果node还有左孩子，根据二分搜索树的结构特点（右子树中的所有节点都比根节点大），node.left一定比node的父节点要大
       // 则node.left可以直接替代node作为node的父节点的右孩子
       Node leftNode = node.left;
       node.left = null;// 取消node对于left的引用，防止内存泄露
