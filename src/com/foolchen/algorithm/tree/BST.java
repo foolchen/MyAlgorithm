@@ -31,6 +31,13 @@ public class BST<Key extends Comparable<Key>, Value> {
       this.value = value;
       this.left = this.right = null;
     }
+
+    public Node(Node node) {
+      this.key = node.key;
+      this.value = node.value;
+      this.left = node.left;
+      this.right = node.right;
+    }
   }
 
   private Node root;
@@ -153,10 +160,20 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
   }
 
+  /**
+   * 从二分搜索树中删除最大键所在的节点
+   */
   public void removeMax() {
     if (root != null) {
       root = removeMax(root);
     }
+  }
+
+  /**
+   * 删除key对应的节点
+   */
+  public void remove(Key key) {
+    root = remove(root, key);
   }
 
   /**
@@ -323,6 +340,53 @@ public class BST<Key extends Comparable<Key>, Value> {
       node.right = removeMax(node.right);
       // 则此时直接返回node，该node还是当前子树的根节点
       return node;
+    }
+  }
+
+  // 在以node为根的二分搜索树中删除key对应的节点
+  private Node remove(Node node, Key key) {
+    if (node == null) {
+      // 如果该二分搜索树为空，则直接中断操作
+      return null;
+    }
+
+    if (key.compareTo(node.key) < 0) {
+      // 要删除的节点在node的左子树中，则对左子树进行递归调用删除
+      node.left = remove(node.left, key);
+      return node;
+    } else if (key.compareTo(node.key) > 0) {
+      // 要删除的节点在node的右子树中，则对右子树进行递归调用删除
+      node.right = remove(node.right, key);
+      return node;
+    } else {
+      // 此时，node就是要被删除的节点
+      if (node.left == null) {
+        // 此时仅存在右子树，则在删除后，使右孩子替代node
+        Node rightNode = node.right;
+        node.right = null;
+        count--;
+        return rightNode;
+      }
+      if (node.right == null) {
+        // 此时仅存在左子树，则在删除后，使左孩子替代node
+        Node leftNode = node.left;
+        node.left = null;
+        count--;
+        return leftNode;
+      }
+      // 执行到此处时，表明node存在左右孩子，则需要挑选前驱节点（node的左子树中的最大节点）或者后继节点（node的右子树中的最小节点）来替代node
+      // 此处使用后继节点
+      Node successor = new Node(minimum(node.right)); // 为了防止后继节点被错误释放，此处进行拷贝
+      count++; // 由于增加了新的节点，故需要对节点数量进行增加
+
+      // 此处将successor与node的左右孩子进行连接
+      successor.left = node.left;
+      successor.right = removeMin(node.right);// 此处连接的是删除后继节点后的右子树，防止节点重复
+
+      node.left = node.right = null; // 解除被删除节点的连接，防止内存泄露
+      count--;
+      // 返回新的节点用于取代node成为该子树的根节点
+      return successor;
     }
   }
 }
