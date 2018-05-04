@@ -123,6 +123,43 @@ public class BST<Key extends Comparable<Key>, Value> {
   }
 
   /**
+   * 从二叉搜索树中查找最小键所在节点
+   */
+  public Key minimum() {
+    if (count != 0) {
+      return minimum(root).key;
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * 从二叉搜索树中删除最小键所在的节点
+   */
+  public void removeMin() {
+    if (root != null) {
+      root = removeMin(root);
+    }
+  }
+
+  /**
+   * 从二叉搜索树中查找最大键所在节点
+   */
+  public Key maximum() {
+    if (count != 0) {
+      return maximum(root).key;
+    } else {
+      return null;
+    }
+  }
+
+  public void removeMax() {
+    if (root != null) {
+      root = removeMax(root);
+    }
+  }
+
+  /**
    * 向以node节点为根的二叉搜索树中插入新的元素<br/>
    * 该方法使用了递归算法。
    */
@@ -230,6 +267,62 @@ public class BST<Key extends Comparable<Key>, Value> {
       postOrder(node.right);
       // 然后对当前节点进行访问
       System.out.println(node.key);
+    }
+  }
+
+  // 查找以node为根的子二叉搜索树的最小节点
+  private Node minimum(Node node) {
+    // 由于二叉搜索树的左孩子一定比当前节点小，故在某个节点没有左孩子时，该节点一定是树中的最小节点
+    if (node.left == null) {
+      return node;
+    }
+    return minimum(node.left);
+  }
+
+  // 在以node为根的二叉搜索树中删除最小节点，并且返回根节点
+  private Node removeMin(Node node) {
+    if (node.left == null) {
+      // 该节点没有左孩子，则此时该节点即为最小节点
+      // 由于二叉搜索树中的左子树中的值一定比根节点要小
+      // 故在将node从树中断开连接后，如果该node还有右孩子
+      // 则直接将这个右孩子替换node当做其根节点的左孩子并不会破坏二叉搜索树的结构
+      Node rightNode = node.right;
+      node.right = null; // 取消node对于right的引用，防止内存泄露
+      count--;
+      return rightNode;
+    } else {
+      // 如果node存在左孩子，则当前node并不是最小值
+      node.left = removeMin(node.left);
+      // 则此时直接返回node，该node还是当前子树的根节点
+      return node;
+    }
+  }
+
+  // 查找以node为根的子二叉搜索树的最大节点
+  private Node maximum(Node node) {
+    // 由于二叉搜索树的右孩子一定比当前节点大，故在某个节点没有右孩子时，该节点一定是树中的最大节点
+    if (node.right == null) {
+      return node;
+    }
+    return maximum(node.right);
+  }
+
+  // 在以node为根的二叉搜索树中删除最大节点，并且返回根节点
+  private Node removeMax(Node node) {
+    if (node.right == null) {
+      // 在node没有右孩子的时候，则node就是二叉搜索树中的最大值
+      // 此时需要将node从二叉搜索树中断开
+      // 此时如果node还有左孩子，根据二叉搜索树的结构特点（右子树中的所有节点都比根节点大），node.left一定比node的父节点要大
+      // 则node.left可以直接替代node作为node的父节点的右孩子
+      Node leftNode = node.left;
+      node.left = null;// 取消node对于left的引用，防止内存泄露
+      count--;
+      return leftNode;
+    } else {
+      // 此时node存在右孩子，node不是最大值
+      node.right = removeMax(node.right);
+      // 则此时直接返回node，该node还是当前子树的根节点
+      return node;
     }
   }
 }
