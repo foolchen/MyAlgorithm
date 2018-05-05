@@ -157,7 +157,29 @@ public class BST<Key extends Comparable<Key>, Value> {
    * 对二分搜索树进行后续遍历
    */
   public void postOrder() {
+    System.out.println("recursive postOrderTraverse start");
     postOrder(root);
+    System.out.println("iterative postOrderTraverse start");
+
+    // 后续遍历的顺序为左子树、右子树、根
+    if (root != null) {
+      Stack<Node> stack = new Stack<>();
+      Stack<Node> output = new Stack<>();
+      Node node = root;
+      while (node != null || !stack.isEmpty()) {
+        if (node != null) {
+          stack.push(node);
+          output.push(node);
+          node = node.right;
+        } else {
+          Node pop = stack.pop();
+          node = pop.left;
+        }
+      }
+      while (!output.isEmpty()) {
+        System.out.println(output.pop().key);
+      }
+    }
   }
 
   /**
