@@ -1,6 +1,7 @@
 package com.foolchen.algorithm.tree;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * 二分搜索树（Binary Search Tree）<br/>
@@ -91,7 +92,34 @@ public class BST<Key extends Comparable<Key>, Value> {
    * 对二分搜索树进行前序遍历
    */
   public void preOrder() {
+    // 此处为前序遍历的递归算法
+    System.out.println("recursive preOrderTraverse start");
     preOrder(root);
+    System.out.println("iterative preOrderTraverse start");
+
+    // 此处为前序遍历的非递归算法
+    if (root != null) {
+      // 先序遍历时，需要先遍历父节点，然后依次遍历其左孩子、右孩子
+      // 数据结构栈Stack的特点为先进后出
+      Stack<Node> stack = new Stack<>();
+      // 由于需要从根开始进行遍历，故首先将根节点push到栈中
+      stack.push(root);
+      while (!stack.isEmpty()) {
+        // 首先取出最后存储的节点，进行访问
+        // 如果是第一次迭代，则取出的为根节点
+        Node node = stack.pop();
+        System.out.println(node.key);
+
+        // 然后按照右孩子、左孩子的顺序，将节点push到栈中
+        // 以满足node、node.right、node.left的访问顺序
+        if (node.right != null) {
+          stack.push(node.right);
+        }
+        if (node.left != null) {
+          stack.push(node.left);
+        }
+      }
+    }
   }
 
   /**
@@ -227,8 +255,7 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     // 该运算的结果等同于上述代码的运行结果
     int result = key.compareTo(node.key);
-    return result == 0 || (result < 0 ? contains(node.left, key)
-        : contains(node.right, key));
+    return result == 0 || (result < 0 ? contains(node.left, key) : contains(node.right, key));
   }
 
   /**

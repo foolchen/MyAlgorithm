@@ -39,9 +39,9 @@ public class BSTTest {
     }*/
 
     //testSearch();
-    //testTraverse();
+    testTraverse();
     //testMaxMin();
-    testRemove();
+    //testRemove();
   }
 
   private static void testSearch() {
