@@ -40,7 +40,8 @@ public class BSTTest {
 
     //testSearch();
     //testTraverse();
-    testMaxMin();
+    //testMaxMin();
+    testRemove();
   }
 
   private static void testSearch() {
@@ -152,7 +153,7 @@ public class BSTTest {
     // 取n个取值范围在[0...m)的随机整数放进二分搜索树中
     int N = 100;
     int M = 100;
-    for(int i = 0 ; i < N ; i ++){
+    for (int i = 0; i < N; i++) {
       Integer key = (int) (Math.random() * M);
       // 为了后续测试方便,这里value值取和key值一样
       bst.insert(key, key);
@@ -162,15 +163,14 @@ public class BSTTest {
     // 测试 removeMin
     // 输出的元素应该是从小到大排列的
     System.out.println("Test removeMin: ");
-    while( !bst.isEmpty() ){
+    while (!bst.isEmpty()) {
       System.out.print("min: " + bst.minimum() + " , ");
       bst.removeMin();
-      System.out.println("After removeMin, size = " + bst.size() );
+      System.out.println("After removeMin, size = " + bst.size());
     }
     System.out.println();
 
-
-    for(int i = 0 ; i < N ; i ++){
+    for (int i = 0; i < N; i++) {
       Integer key = (int) (Math.random() * M);
       // 为了后续测试方便,这里value值取和key值一样
       bst.insert(key, key);
@@ -180,10 +180,52 @@ public class BSTTest {
     // 测试 removeMax
     // 输出的元素应该是从大到小排列的
     System.out.println("Test removeMax: ");
-    while( !bst.isEmpty() ){
+    while (!bst.isEmpty()) {
       System.out.print("max: " + bst.maximum() + " , ");
       bst.removeMax();
-      System.out.println("After removeMax, size = " + bst.size() );
+      System.out.println("After removeMax, size = " + bst.size());
+    }
+  }
+
+  // 测试删除元素
+  private static void testRemove() {
+    BST<Integer, Integer> bst = new BST<>();
+
+    // 取n个取值范围在[0...n)的随机整数放进二分搜索树中
+    int N = 10000;
+    for (int i = 0; i < N; i++) {
+      Integer key = (int) (Math.random() * N);
+      // 为了后续测试方便,这里value值取和key值一样
+      bst.insert(key, key);
+    }
+    // 注意, 由于随机生成的数据有重复, 所以bst中的数据数量大概率是小于n的
+
+    // order数组中存放[0...n)的所有元素
+    Integer order[] = new Integer[N];
+    for (int i = 0; i < N; i++)
+      order[i] = i;
+    // 打乱order数组的顺序
+    shuffle(order);
+
+    // 乱序删除[0...n)范围里的所有元素
+    for (int i = 0; i < N; i++)
+      if (bst.contains(order[i])) {
+        bst.remove(order[i]);
+        System.out.println("After remove " + order[i] + " size = " + bst.size());
+      }
+
+    // 最终整个二分搜索树应该为空
+    System.out.println(bst.size());
+  }
+
+  // 打乱数组顺序
+  private static void shuffle(Object[] arr) {
+
+    for (int i = arr.length - 1; i >= 0; i--) {
+      int pos = (int) (Math.random() * (i + 1));
+      Object t = arr[pos];
+      arr[pos] = arr[i];
+      arr[i] = t;
     }
   }
 }
