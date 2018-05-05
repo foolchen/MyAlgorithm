@@ -126,7 +126,31 @@ public class BST<Key extends Comparable<Key>, Value> {
    * 对二分搜索树进行中序遍历
    */
   public void inOrder() {
+    System.out.println("recursive inOrderTraverse start");
     inOrder(root);
+    System.out.println("iterative inOrderTraverse start");
+    // 访问顺序为左子树、根、右子树
+    // 在使用Stack的情况下，需要在没有左孩子的情况下对当前节点（子树的根节点）进行访问，然后对右子树进行访问
+    if (root != null) {
+      Stack<Node> stack = new Stack<>();
+      Node node = root;
+      while (node != null || !stack.isEmpty()) {
+        if (node != null) {
+          // 此时根节点不为空
+          stack.push(node);
+          // 将左孩子节点赋值给node，如果该node为空，则下次循环时进入另一个分支
+          node = node.left;
+        } else {
+          // 子树的左孩子为空，则直接出栈子树的根节点
+          // 然后将其右子树进行有入栈
+          Node pop = stack.pop();
+          System.out.println(pop.key);
+          // 将右孩子赋值给node，如果不为空，则下次循环进入另外一个分支
+          // 如果为空，则会pop出上一个子树的节点
+          node = pop.right;
+        }
+      }
+    }
   }
 
   /**
