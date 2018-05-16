@@ -1,7 +1,7 @@
 package com.foolchen.algorithm.graph;
 
 /**
- * 稠密图
+ * 稠密图-邻接矩阵
  *
  * @author chenchong. Created on 2018/5/16.
  */
