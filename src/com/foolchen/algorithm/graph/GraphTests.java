@@ -32,7 +32,7 @@ public class GraphTests {
     int n = graph.V();
     StringBuilder builder = new StringBuilder();
     for (int v = 0; v < n; v++) {
-      builder.append(": ");
+      builder.append(v).append(": ");
       Iterable<Integer> iterator = graph.iterator(v);
       for (Integer w : iterator) {
         builder.append(w).append(" ");
