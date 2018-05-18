@@ -67,4 +67,9 @@ public class SparseGraph implements Graph {
     }
     return false;
   }
+
+  @Override public Iterable<Integer> iterator(int v) {
+    assert v >= 0 && v < n;
+    return g[v]; // 邻接表中，g[v]存储了其所有邻边
+  }
 }

@@ -1,5 +1,7 @@
 package com.foolchen.algorithm.graph;
 
+import java.util.Vector;
+
 /**
  * 稠密图-邻接矩阵
  *
@@ -61,5 +63,16 @@ public class DenseGraph implements Graph {
     assert v >= 0 && v < n;
     assert w >= 0 && w < n;
     return g[v][w];
+  }
+
+  @Override public Iterable<Integer> iterator(int v) {
+    assert v >= 0 && v < n;
+    Vector<Integer> iter = new Vector<>();
+    for (int i = 0; i < n; i++) {
+      if (g[v][i]) { // 如果g[v][i]==true，则证明v->i存在邻边
+        iter.add(i);
+      }
+    }
+    return iter;
   }
 }

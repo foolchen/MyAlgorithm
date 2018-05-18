@@ -26,4 +26,9 @@ public interface Graph {
    * @return 如果存在v->w的边，则返回true；否则false
    */
   boolean hasEdge(int v, int w);
+
+  /**
+   * 返回图中一个顶点对应的所有邻边
+   */
+  Iterable<Integer> iterator(int v);
 }
