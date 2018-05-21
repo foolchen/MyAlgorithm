@@ -2,11 +2,10 @@ package com.foolchen.algorithm.sort;
 
 import com.foolchen.algorithm.sort.utils.ArrayUtils;
 import java.util.Arrays;
+import java.util.Stack;
 
 /**
- * @author chenchong
- * 2018/4/16
- * 下午9:24
+ * @author chenchong 2018/4/16 下午9:24
  */
 
 public class QuickSort {
@@ -82,6 +81,25 @@ public class QuickSort {
     // 然后对得到的两个数组进行递归调用quickSort
     quickSort(arr, l, anchor - 1);
     quickSort(arr, anchor + 1, r);
+
+    /*
+    非递归实现
+    Stack<Integer> stack = new Stack<>();
+    stack.push(r);
+    stack.push(l);
+    while (!stack.isEmpty()) {
+      l = stack.pop();
+      r = stack.pop();
+      int index = partition(arr, l, r);
+      if (l < index - 1) {
+        stack.push(index - 1);
+        stack.push(l);
+      }
+      if (r > index + 1) {
+        stack.push(r);
+        stack.push(index + 1);
+      }
+    }*/
   }
 
   ///////////////////////////////////////////////////////////////////////////
