@@ -31,4 +31,9 @@ public interface Graph {
    * 返回图中一个顶点对应的所有邻边
    */
   Iterable<Integer> iterator(int v);
+
+  /**
+   * 在控制台打印Graph
+   */
+  void show();
 }

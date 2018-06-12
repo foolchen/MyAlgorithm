@@ -75,4 +75,18 @@ public class DenseGraph implements Graph {
     }
     return iter;
   }
+
+  @Override public void show() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("DenseGraph: [\n");
+    for (int i = 0; i < n; i++) {
+      builder.append("\t");
+      for (int j = 0; j < n; j++) {
+        builder.append(g[i][j]).append("\t");
+      }
+      builder.append("\n");
+    }
+    builder.append("]");
+    System.out.println(builder.toString());
+  }
 }

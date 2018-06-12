@@ -5,6 +5,24 @@ package com.foolchen.algorithm.graph;
  */
 public class GraphTests {
   public static void main(String[] args) {
+    //createGraphs();
+    createGraphsByScanner();
+  }
+
+  private static void createGraphsByScanner() {
+    GraphScanner scanner = new GraphScanner();
+    Graph graph = scanner.createGraph("testG1.txt", true, false);
+    graph.show();
+    graph = scanner.createGraph("testG1.txt", false, false);
+    graph.show();
+
+    graph = scanner.createGraph("testG2.txt", true, false);
+    graph.show();
+    graph = scanner.createGraph("testG2.txt", false, false);
+    graph.show();
+  }
+
+  private static void createGraphs() {
     int N = 5; // 顶点数
     int M = 10; // 边数
 

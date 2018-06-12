@@ -72,4 +72,19 @@ public class SparseGraph implements Graph {
     assert v >= 0 && v < n;
     return g[v]; // 邻接表中，g[v]存储了其所有邻边
   }
+
+  @Override public void show() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("DenseGraph: [\n");
+    for (int i = 0; i < n; i++) {
+      builder.append("\t").append(i).append(" : ");
+      Vector<Integer> vector = g[i];
+      for (int j = 0; j < vector.size(); j++) {
+        builder.append(vector.elementAt(j)).append("\t");
+      }
+      builder.append("\n");
+    }
+    builder.append("]");
+    System.out.println(builder.toString());
+  }
 }
