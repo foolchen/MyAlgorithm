@@ -11,15 +11,19 @@ public class GraphTests {
 
   private static void createGraphsByScanner() {
     GraphScanner scanner = new GraphScanner();
+    System.out.println("Graph1：");
     Graph graph = scanner.createGraph("testG1.txt", true, false);
     graph.show();
     graph = scanner.createGraph("testG1.txt", false, false);
     graph.show();
-
+    System.out.println("Graph1，Component count is " + new Components(graph).getCount());
+    System.out.println("Graph2：");
     graph = scanner.createGraph("testG2.txt", true, false);
     graph.show();
     graph = scanner.createGraph("testG2.txt", false, false);
     graph.show();
+    System.out.println("Graph2，Component count is " + new Components(graph).getCount());
+
   }
 
   private static void createGraphs() {
