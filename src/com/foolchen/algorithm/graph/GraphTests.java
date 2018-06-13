@@ -1,12 +1,25 @@
 package com.foolchen.algorithm.graph;
 
+import java.util.Vector;
+
 /**
  * @author chenchong. Created on 2018/5/18.
  */
 public class GraphTests {
   public static void main(String[] args) {
     //createGraphs();
-    createGraphsByScanner();
+    //createGraphsByScanner();
+    findPathDFS();
+  }
+
+  private static void findPathDFS() {
+    GraphScanner scanner = new GraphScanner();
+    Graph graph = scanner.createGraph("testG1.txt", false, false);
+    graph.show();
+
+    Path path = new Path(graph, 0);
+    Vector<Integer> v = path.getPath(6);
+    System.out.println("path: " + v);
   }
 
   private static void createGraphsByScanner() {
@@ -23,7 +36,6 @@ public class GraphTests {
     graph = scanner.createGraph("testG2.txt", false, false);
     graph.show();
     System.out.println("Graph2，Component count is " + new Components(graph).getCount());
-
   }
 
   private static void createGraphs() {
