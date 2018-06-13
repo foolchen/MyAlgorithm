@@ -19,7 +19,11 @@ public class GraphTests {
 
     Path path = new Path(graph, 0);
     Vector<Integer> v = path.getPath(6);
-    System.out.println("path: " + v);
+    System.out.println("path : " + v);
+
+    ShortestPath shortestPath = new ShortestPath(graph, 0);
+    v = shortestPath.getPath(6);
+    System.out.println("shortest path : " + v);
   }
 
   private static void createGraphsByScanner() {
