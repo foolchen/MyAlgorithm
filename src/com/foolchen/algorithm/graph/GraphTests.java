@@ -9,10 +9,21 @@ public class GraphTests {
   public static void main(String[] args) {
     //createGraphs();
     //createGraphsByScanner();
-    findPathDFS();
+    //findPath();
+    createWeightedGraph();
   }
 
-  private static void findPathDFS() {
+  private static void createWeightedGraph() {
+    GraphScanner scanner = new GraphScanner();
+    WeightedGraph<Double> graph =
+        scanner.createWeightedGraph("weightedGraph.txt", false, false);
+    graph.show();
+
+    graph = scanner.createWeightedGraph("weightedGraph.txt", true, false);
+    graph.show();
+  }
+
+  private static void findPath() {
     GraphScanner scanner = new GraphScanner();
     Graph graph = scanner.createGraph("testG1.txt", false, false);
     graph.show();
