@@ -14,7 +14,7 @@ import java.util.Arrays;
  *
  * @author chenchong. Created on 2018/4/20.
  */
-public class MaxHeap<Item extends Comparable<Item>> {
+public class MaxHeap<Item extends Comparable<Item>> implements Heap<Item> {
   private Item[] data;
   private int capacity;
   private int count;
@@ -126,7 +126,7 @@ public class MaxHeap<Item extends Comparable<Item>> {
   }
 
   public static void main(String[] args) {
-    int[] arr = {62, 41, 30, 28, 16, 22, 13, 19, 17, 15};
+    int[] arr = { 62, 41, 30, 28, 16, 22, 13, 19, 17, 15 };
     ArrayUtils.disorderArr(arr, 5);
     System.out.println("source elements : " + Arrays.toString(arr));
     MaxIntHeap maxIntHeap1 = new MaxIntHeap(arr.length);
