@@ -104,8 +104,7 @@ public class MinHeap<Item extends Comparable<Item>> implements Heap<Item> {
     }
   }
 
-  // 在向堆中插入一条数据时，需要对该数据所在的节点进行上升操作
-  // 以满足整体的最小堆结构
+  // 在向堆中插入一条数据时，需要对该节点进行上升操作，以满足整体的最小堆结构
   private void shiftUp(int position) {
     // 如果父节点大于当前节点，则需要交换两者
     while (position > 0 && data[(position - 1) / 2].compareTo(data[position]) > 0) {
